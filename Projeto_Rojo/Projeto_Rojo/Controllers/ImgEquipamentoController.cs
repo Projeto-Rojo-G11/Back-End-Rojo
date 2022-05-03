@@ -38,7 +38,9 @@ namespace Projeto_Rojo.Controllers
                 //    return BadRequest(new { mensagem = "Apenas arquivos .png são permitidos." });
 
 
-                int idEquipamento = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+                string idEquipamento = arquivo.
 
                 _equipamentoRepository.SalvarPerfilBD(arquivo, idEquipamento);
 
