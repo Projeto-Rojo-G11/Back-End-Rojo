@@ -52,8 +52,6 @@ namespace Projeto_Rojo.Controllers
             }
         }
 
-
-
                 [HttpGet("equipamento/{id}")]
                 public IActionResult GetById(int id)
                 {

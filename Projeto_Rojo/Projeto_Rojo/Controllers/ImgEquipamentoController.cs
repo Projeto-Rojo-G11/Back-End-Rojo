@@ -25,22 +25,17 @@ namespace Projeto_Rojo.Controllers
         }
 
         [HttpPost("imagem/bd")]
-        public IActionResult postBD(IFormFile arquivo)
+        public IActionResult postBD(IFormFile arquivo, int idEquipamento)
         {
             try
             {
                 if (arquivo.Length > 5000000)
                     return BadRequest(new { mensagem = "O tamanho máximo da imagem foi atingido." });
 
-                string extensao = arquivo.FileName.Split('.').Last();
+                //string extensao = arquivo.FileName.Split('.').Last();
 
                 //if(extensao != "png")
                 //    return BadRequest(new { mensagem = "Apenas arquivos .png são permitidos." });
-
-
-                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-                string idEquipamento = arquivo.
 
                 _equipamentoRepository.SalvarPerfilBD(arquivo, idEquipamento);
 

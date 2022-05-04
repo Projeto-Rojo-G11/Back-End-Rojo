@@ -29,7 +29,7 @@ namespace Projeto_Rojo.Repositories
             return null;
         }
 
-        public void SalvarPerfilBD(IFormFile foto, int id_e)
+        public void SalvarPerfilBD(IFormFile foto, int idEquipamento)
         {
 
             ImgEquipamento imgEquipamento = new ImgEquipamento();
@@ -45,19 +45,19 @@ namespace Projeto_Rojo.Repositories
 
                 imgEquipamento.MimeType = foto.FileName.Split('.').Last();
 
-                imgEquipamento.IdEquipamento = id_e;
+                imgEquipamento.IdEquipamento = idEquipamento;
             }
 
 
             ImgEquipamento fotoexistente = new ImgEquipamento();
-            fotoexistente = ctx.ImgEquipamentos.FirstOrDefault(i => i.IdEquipamento == id_e);
+            fotoexistente = ctx.ImgEquipamentos.FirstOrDefault(i => i.IdEquipamento == idEquipamento);
 
             if (fotoexistente != null)
             {
                 fotoexistente.Binario = imgEquipamento.Binario;
                 fotoexistente.NomeArquivo = imgEquipamento.NomeArquivo;
                 fotoexistente.MimeType = imgEquipamento.MimeType;
-                fotoexistente.IdEquipamento = id_e;
+                fotoexistente.IdEquipamento = idEquipamento;
 
 
                 ctx.ImgEquipamentos.Update(fotoexistente);
