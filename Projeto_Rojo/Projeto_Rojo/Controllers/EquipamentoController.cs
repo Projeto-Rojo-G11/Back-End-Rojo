@@ -30,49 +30,28 @@ namespace Projeto_Rojo.Controllers
         }
 
 
-               [HttpGet("listar-meus-equipamentos")]
-                public IActionResult Get()
-                {
-                    try
-                    {
-                        int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+        [HttpGet("listar-meus-equipamentos")]
+        public IActionResult Get()
+        {
+            try
+            {
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
 
-                        return Ok(equipamentoRepository.Listar(idUsuario));
-                    }
-                    catch (Exception erro)
-                    {
-                       return BadRequest(
-                            new
-                            {
-                                mensagem = " obrigatório id do usuario!",
-                               erro = erro
-                  
-                            }
-                        );
-                    } 
-                }
+                return Ok(equipamentoRepository.Listar(idUsuario));
+            }
+            catch (Exception erro)
+            {
+                return BadRequest(
+                     new
+                     {
+                         mensagem = " obrigatório id do usuario!",
+                         erro = erro
 
-                [HttpGet("lista-equipamentos")]
-                public IActionResult Get()
-                {
-                    try
-                    {
-                        int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+                     }
+                 );
+            }
+        }
 
-                        return Ok(equipamentoRepository.Listar(idUsuario));
-                    }
-                    catch (Exception erro)
-                    {
-                        return BadRequest(
-                        new
-                        {
-                            mensagem = " obrigatório id do usuario!",
-                            erro = erro
-
-                        }
-                        );
-                    } 
-                }
 
 
                 [HttpGet("equipamento/{id}")]
