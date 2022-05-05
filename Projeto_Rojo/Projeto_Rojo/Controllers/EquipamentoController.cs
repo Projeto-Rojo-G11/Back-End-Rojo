@@ -21,97 +21,97 @@ namespace Projeto_Rojo.Controllers
     public class EquipamentoController : ControllerBase
     {
 
-        private IEquipamentoRepository equipamentoRepository { get; set; }
+    private IEquipamentoRepository equipamentoRepository { get; set; }
 
 
-        public EquipamentoController()
+    public EquipamentoController()
+    {
+        equipamentoRepository = new EquipamentoRepository();
+    }
+
+
+    [HttpGet("listar-meus-equipamentos")]
+    public IActionResult Get()
+    {
+        try
         {
-            equipamentoRepository = new EquipamentoRepository();
+            int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+            return Ok(equipamentoRepository.Listar(idUsuario));
         }
-
-
-        [HttpGet("listar-meus-equipamentos")]
-        public IActionResult Get()
+        catch (Exception erro)
         {
-            try
-            {
-                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+            return BadRequest(
+                    new
+                    {
+                        mensagem = " obrigatório id do usuario!",
+                        erro = erro
 
-                return Ok(equipamentoRepository.Listar(idUsuario));
-            }
-            catch (Exception erro)
-            {
-                return BadRequest(
-                     new
-                     {
-                         mensagem = " obrigatório id do usuario!",
-                         erro = erro
-
-                     }
-                 );
-            }
+                    }
+                );
         }
+    }
 
-                [HttpGet("equipamento/{id}")]
-                public IActionResult GetById(int id)
-                {
-                    try
-                    {
-                        return Ok(equipamentoRepository.BuscarPorId(id));
-                    }
-                    catch (Exception erro)
-                    {
-                        return BadRequest(erro);
-                    }
-                }
-
-
-                [HttpPost("cadastro-equipamento")]
-                public IActionResult Post(Equipamento novoEvento)
-                {
-                    try
-                    {
-                        equipamentoRepository.Cadastrar(novoEvento);
-
-                        return StatusCode(201);
-                    }
-                    catch (Exception ex)
-                    {
-                        return BadRequest(ex);
-                    }
-                }
+    [HttpGet("equipamento/{id}")]
+    public IActionResult GetById(int id)
+    {
+        try
+        {
+            return Ok(equipamentoRepository.BuscarPorId(id));
+        }
+        catch (Exception erro)
+        {
+            return BadRequest(erro);
+        }
+    }
 
 
-                [HttpPut("atualizar/{id}")]
-                public IActionResult Put(int id, Equipamento eventoAtualizado)
-                {
-                    try
-                    {
-                        equipamentoRepository.Atualizar(id,eventoAtualizado);
+    [HttpPost("cadastro-equipamento")]
+    public IActionResult Post(Equipamento novoEvento)
+    {
+        try
+        {
+            equipamentoRepository.Cadastrar(novoEvento);
 
-                        return StatusCode(204);
-                    }
-                    catch (Exception ex)
-                    {
-                        return BadRequest(ex);
-                    }
-                }
+            return StatusCode(201);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
 
 
-                [HttpDelete("deletar")]
-                public IActionResult Delete(int id)
-                {
-                    try
-                    {
-                        equipamentoRepository.Deletar(id);
+    [HttpPut("atualizar/{id}")]
+    public IActionResult Put(int id, Equipamento eventoAtualizado)
+    {
+        try
+        {
+            equipamentoRepository.Atualizar(id,eventoAtualizado);
 
-                        return StatusCode(204);
-                    }
-                    catch (Exception ex)
-                    {
-                        return BadRequest(ex);
-                    }
-                }
-            }
+            return StatusCode(204);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
+
+
+    [HttpDelete("deletar")]
+    public IActionResult Delete(int id)
+    {
+        try
+        {
+            equipamentoRepository.Deletar(id);
+
+            return StatusCode(204);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
+    }
 }
     

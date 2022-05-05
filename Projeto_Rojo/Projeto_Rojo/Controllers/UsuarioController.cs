@@ -16,91 +16,109 @@ namespace Projeto_Rojo.Controllers
     [Route("api/[controller]")]
     [ApiController]
    
-        public class UsuarioController : ControllerBase
+    public class UsuarioController : ControllerBase
+    {
+
+        private IUsuarioRepository usuarioRepository { get; set; }
+
+        public UsuarioController()
         {
+            usuarioRepository = new UsuarioRepository();
+        }
 
-            private IUsuarioRepository usuarioRepository { get; set; }
-
-            public UsuarioController()
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
             {
-                usuarioRepository = new UsuarioRepository();
+                return Ok(usuarioRepository.Listar());
             }
-
-            [HttpGet]
-            public IActionResult Get()
+            catch (Exception erro)
             {
-                try
-                {
-                    return Ok(usuarioRepository.Listar());
-                }
-                catch (Exception erro)
-                {
-                    return BadRequest(erro);
-                }
+                return BadRequest(erro);
             }
+        }
 
-            [HttpGet("usuario/{id}")]
-            public IActionResult GetById(int id)
+        [HttpGet("usuario/token")]
+        public IActionResult GetByToken()
+        {
+            try
             {
-                try
-                {
                 int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-                return Ok(idUsuario);
-                }
-                catch (Exception erro)
-                {
-                    return BadRequest(erro);
-                }
+
+                return Ok(usuarioRepository.BuscarPorId(idUsuario));
+
             }
-
-            [HttpPost("cadastro-usuario")]
-            public IActionResult Post(Usuario novoUsuario)
+            catch (Exception erro)
             {
-                try
-                {
-                    usuarioRepository.Cadastrar(novoUsuario);
 
-                    return StatusCode(201);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex);
-                }
+                return BadRequest(erro);
             }
+                
+        }
 
-            [HttpPut("atualizar/{id}")]
-            public IActionResult Put(int id, Usuario usuarioAtualizado)
+
+        [HttpGet("usuario/{id}")]
+        public IActionResult GetById(int idUsuario)
+        {
+            try
             {
-                try
-                {
-
-                    usuarioRepository.Atualizar( id, usuarioAtualizado);
-
-                    return StatusCode(204);
-
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex);
-                }
+                return Ok(usuarioRepository.BuscarPorId(idUsuario));
             }
-
-            [HttpDelete("{id}")]
-            public IActionResult Delete(int id)
+            catch (Exception erro)
             {
-                try
-                {
+                return BadRequest(erro);
+            }
+        }
 
-                    usuarioRepository.Deletar(id);
+        [HttpPost("cadastro-usuario")]
+        public IActionResult Post(Usuario novoUsuario)
+        {
+            try
+            {
+                usuarioRepository.Cadastrar(novoUsuario);
+
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut("atualizar/{id}")]
+        public IActionResult Put(int id, Usuario usuarioAtualizado)
+        {
+            try
+            {
+
+                usuarioRepository.Atualizar( id, usuarioAtualizado);
+
+                return StatusCode(204);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+
+                usuarioRepository.Deletar(id);
 
     
-                    return StatusCode(204);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex);
-                }
+                return StatusCode(204);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
     }
+}
 

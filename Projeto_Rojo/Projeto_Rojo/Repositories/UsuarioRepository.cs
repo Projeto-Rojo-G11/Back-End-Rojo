@@ -127,22 +127,22 @@ namespace Projeto_Rojo.Repositories
             
         }
 
-
-
         public Usuario BuscarPorId(int id)
         {
-            return ctx.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
+            Usuario usuario = ctx.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
+
+            return usuario;
         }
 
 
         public Usuario Cadastrar(Usuario a)
         {
 
-                ctx.Usuarios.Add(a);
+            ctx.Usuarios.Add(a);
 
-                ctx.SaveChanges();
+            ctx.SaveChanges();
 
-                return a;
+            return a;
            
         }
 
