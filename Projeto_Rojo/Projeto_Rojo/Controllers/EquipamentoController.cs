@@ -30,14 +30,12 @@ namespace Projeto_Rojo.Controllers
     }
 
 
-    [HttpGet("listar-meus-equipamentos")]
-    public IActionResult Get()
+    [HttpGet("listar-meus-equipamentos/{id}")]
+    public IActionResult Get(int id)
     {
         try
         {
-            int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-            return Ok(equipamentoRepository.Listar(idUsuario));
+            return Ok(equipamentoRepository.Listar(id));
         }
         catch (Exception erro)
         {
