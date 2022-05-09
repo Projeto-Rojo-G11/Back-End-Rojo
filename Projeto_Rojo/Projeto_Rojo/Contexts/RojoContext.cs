@@ -31,10 +31,8 @@ namespace Projeto_Rojo.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer("Data Source=dbprojeto-rojo.ca4n6cmzyivn.us-east-1.rds.amazonaws.com; initial catalog=PROJETO_ROJO; user id=Desenvolvedor; pwd=Senai#Grupo11;");
-                optionsBuilder.UseSqlServer("Data Source=NOTE0113C2\\SQLEXPRESS; initial catalog=PROJETO_ROJO; user id=sa; pwd=Senai@132;");
-                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-G5G5MAP\\SQLEXPRESS; initial catalog=PROJETO_ROJO; Integrated Security=True;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-JRUNGR9; initial catalog=PROJETO_ROJO;  Integrated Security=True;");
             }
         }
 
@@ -45,7 +43,7 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<Alertum>(entity =>
             {
                 entity.HasKey(e => e.IdAlerta)
-                    .HasName("PK__Alerta__D2CDBC4FF14F42E3");
+                    .HasName("PK__Alerta__D2CDBC4F4DA24B77");
 
                 entity.Property(e => e.Descricao)
                     .IsRequired()
@@ -55,13 +53,13 @@ namespace Projeto_Rojo.Contexts
                 entity.HasOne(d => d.IdEquipamentoNavigation)
                     .WithMany(p => p.Alerta)
                     .HasForeignKey(d => d.IdEquipamento)
-                    .HasConstraintName("FK__Alerta__IdEquipa__49C3F6B7");
+                    .HasConstraintName("FK__Alerta__IdEquipa__38996AB5");
             });
 
             modelBuilder.Entity<Alteracao>(entity =>
             {
                 entity.HasKey(e => e.IdAlteracao)
-                    .HasName("PK__Alteraca__76DD1CC1AD18CB2C");
+                    .HasName("PK__Alteraca__76DD1CC1FCF1BB67");
 
                 entity.ToTable("Alteracao");
 
@@ -75,13 +73,13 @@ namespace Projeto_Rojo.Contexts
                 entity.HasOne(d => d.IdEquipamentoNavigation)
                     .WithMany(p => p.Alteracaos)
                     .HasForeignKey(d => d.IdEquipamento)
-                    .HasConstraintName("FK__Alteracao__IdEqu__5AEE82B9");
+                    .HasConstraintName("FK__Alteracao__IdEqu__35BCFE0A");
             });
 
             modelBuilder.Entity<Equipamento>(entity =>
             {
                 entity.HasKey(e => e.IdEquipamento)
-                    .HasName("PK__Equipame__E309D87F83948D22");
+                    .HasName("PK__Equipame__E309D87F09CC7490");
 
                 entity.ToTable("Equipamento");
 
@@ -95,22 +93,26 @@ namespace Projeto_Rojo.Contexts
                     .HasMaxLength(80)
                     .IsUnicode(false);
 
+                entity.Property(e => e.NumeroDeSerie)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.HasOne(d => d.IdTipoEquipamentoNavigation)
                     .WithMany(p => p.Equipamentos)
                     .HasForeignKey(d => d.IdTipoEquipamento)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Equipamen__IdTip__46E78A0C");
+                    .HasConstraintName("FK__Equipamen__IdTip__32E0915F");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Equipamentos)
                     .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__Equipamen__IdUsu__45F365D3");
+                    .HasConstraintName("FK__Equipamen__IdUsu__31EC6D26");
             });
 
             modelBuilder.Entity<ImgEquipamento>(entity =>
             {
                 entity.HasKey(e => e.IdImagemEquipamento)
-                    .HasName("PK__ImgEquip__739FE4ADF20E1C54");
+                    .HasName("PK__ImgEquip__739FE4AD29D3B454");
 
                 entity.ToTable("ImgEquipamento");
 
@@ -138,17 +140,17 @@ namespace Projeto_Rojo.Contexts
                 entity.HasOne(d => d.IdEquipamentoNavigation)
                     .WithMany(p => p.ImgEquipamentos)
                     .HasForeignKey(d => d.IdEquipamento)
-                    .HasConstraintName("FK__ImgEquipa__IdEqu__4CA06362");
+                    .HasConstraintName("FK__ImgEquipa__IdEqu__3B75D760");
             });
 
             modelBuilder.Entity<ImgUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdImg)
-                    .HasName("PK__ImgUsuar__0C1AF99B648FC5A5");
+                    .HasName("PK__ImgUsuar__0C1AF99B84CA536C");
 
                 entity.ToTable("ImgUsuario");
 
-                entity.HasIndex(e => e.IdUsuario, "UQ__ImgUsuar__5B65BF961C4E4762")
+                entity.HasIndex(e => e.IdUsuario, "UQ__ImgUsuar__5B65BF96BA59493A")
                     .IsUnique();
 
                 entity.Property(e => e.Binario)
@@ -175,17 +177,17 @@ namespace Projeto_Rojo.Contexts
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithOne(p => p.ImgUsuario)
                     .HasForeignKey<ImgUsuario>(d => d.IdUsuario)
-                    .HasConstraintName("FK__ImgUsuari__IdUsu__3D5E1FD2");
+                    .HasConstraintName("FK__ImgUsuari__IdUsu__2B3F6F97");
             });
 
             modelBuilder.Entity<TipoEquipamento>(entity =>
             {
                 entity.HasKey(e => e.IdTipoEquipamento)
-                    .HasName("PK__TipoEqui__0191D191A9BE2A3C");
+                    .HasName("PK__TipoEqui__0191D19133041B7D");
 
                 entity.ToTable("TipoEquipamento");
 
-                entity.HasIndex(e => e.Equipamento, "UQ__TipoEqui__3185A02D2B9455AE")
+                entity.HasIndex(e => e.Equipamento, "UQ__TipoEqui__3185A02DE9215A4B")
                     .IsUnique();
 
                 entity.Property(e => e.Equipamento)
@@ -197,11 +199,11 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<TipoUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdTipoUsuario)
-                    .HasName("PK__TipoUsua__CA04062BABD3D77C");
+                    .HasName("PK__TipoUsua__CA04062B59D7CA36");
 
                 entity.ToTable("TipoUsuario");
 
-                entity.HasIndex(e => e.Usuario, "UQ__TipoUsua__E3237CF7AD80DECE")
+                entity.HasIndex(e => e.Usuario, "UQ__TipoUsua__E3237CF791B50F6D")
                     .IsUnique();
 
                 entity.Property(e => e.Usuario)
@@ -213,7 +215,7 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__5B65BF97C92FBC7E");
+                    .HasName("PK__Usuario__5B65BF97CD3085D1");
 
                 entity.ToTable("Usuario");
 
@@ -250,7 +252,7 @@ namespace Projeto_Rojo.Contexts
                 entity.HasOne(d => d.IdTipoUsuarioNavigation)
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.IdTipoUsuario)
-                    .HasConstraintName("FK__Usuario__IdTipoU__398D8EEE");
+                    .HasConstraintName("FK__Usuario__IdTipoU__276EDEB3");
             });
 
             OnModelCreatingPartial(modelBuilder);

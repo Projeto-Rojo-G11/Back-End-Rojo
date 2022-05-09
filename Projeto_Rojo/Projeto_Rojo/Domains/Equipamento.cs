@@ -17,7 +17,7 @@ namespace Projeto_Rojo.Domains
         public int IdEquipamento { get; set; }
         public int? IdUsuario { get; set; }
         public int IdTipoEquipamento { get; set; }
-        public int? NumeroDeSerie { get; set; }
+        public string NumeroDeSerie { get; set; }
         public string Modelo { get; set; }
         public int? GateWay { get; set; }
         public int? Mask { get; set; }
